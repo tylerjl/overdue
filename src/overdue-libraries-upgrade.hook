@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Upgrade
+Type = File
+Target = usr/lib/*
+Target = usr/lib64/*
+
+[Action]
+Description = Checking for stale library file handles...
+Depends = overdue
+When = PostTransaction
+Exec = /usr/bin/overdue
