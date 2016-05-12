@@ -1,12 +1,11 @@
 [Trigger]
 Operation = Upgrade
 Type = File
-Target = usr/lib/*
-Target = usr/lib64/*
+Target = usr/lib/*.so
+Target = usr/lib32/*.so
 
 [Action]
 Description = Checking for stale library file handles...
-Depends = overdue
 When = PostTransaction
 Exec = /usr/bin/overdue
 NeedsTargets
