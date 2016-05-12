@@ -1,20 +1,20 @@
-#!/usr/bin/env sh
+#!/usr/bin/bash
 
-if [ "$EUID" != "0" ] ; then
-    echo 'You must be root to run this program.'
-    exit 1
-fi
+declare services=""
+while read -r f; do
+    for i in $(fuser $f 2>/dev/null); do
+        service="$(ps -o unit= $i)"
+        if [[ -n "$service" ]]; then
+            services="${services}\n${service}"
+        fi
+    done
+done
+services=$(sort <(echo -e $services) | uniq)
 
-services="$(lsof -d DEL -F pn0 |\
-    awk -f /usr/share/overdue/overdue.awk |\
-    xargs -L1 systemctl status --no-pager 2>/dev/null |\
-    grep -E '[.]\w+ - ' |\
-    sort | uniq | sort)"
-
-if [ ! -z "$services" ] ; then
-    echo "The following daemons/units have stale file handles open to
-libraries that have been upgraded. Consider restarting them
-if they should reference updated shared libraries.
-
-$services"
+if [[ -n "$services" ]]; then
+    echo "The following systemd services have stale file handles open to"
+    echo "libraries that have been upgraded:"
+    for i in $services; do
+        echo -e "  $i"
+    done
 fi

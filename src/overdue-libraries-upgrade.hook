@@ -9,3 +9,4 @@ Description = Checking for stale library file handles...
 Depends = overdue
 When = PostTransaction
 Exec = /usr/bin/overdue
+NeedsTargets
