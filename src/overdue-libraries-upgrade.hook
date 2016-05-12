@@ -7,5 +7,5 @@ Target = usr/lib32/*.so
 [Action]
 Description = Checking for stale library file handles...
 When = PostTransaction
-Exec = /usr/bin/overdue
+Exec = /usr/share/libalpm/scripts/overdue
 NeedsTargets
