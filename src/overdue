@@ -5,4 +5,4 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-echo "/usr/lib*/*.so" | /usr/share/libalpm/scripts/overdue
+lsof -o / | awk '$4 == "DEL" {print $8}' | /usr/share/libalpm/scripts/overdue
