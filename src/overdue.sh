@@ -2,7 +2,7 @@
 
 declare services=""
 while read -r f; do
-    i="$(ps -o unit= $(fuser -s $f))"
+    i="$(ps -o unit= $(fuser $f 2> /dev/null))"
     for service in $i; do
         if [[ -n "$service" ]]; then
             services="${services}\n${service}"
