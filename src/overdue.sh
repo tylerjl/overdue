@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
-declare services=""
+files=""
 while read -r f; do
-    i="$(ps -o unit= $(echo "$(fuser $f 2> /dev/null)"))"
-    i="$(sort <(echo -e $i) | uniq)"
-    for service in $i; do
-        if [[ -n "$service" ]]; then
-            services="${services}\n${service}"
-        fi
-    done
+    files="${files} ${f}"
 done
-services="$(sort <(echo -e $services) | uniq)"
+
+pids=$(echo $(fuser $files 2> /dev/null))
+services="$(ps -o unit= $pids)"
+services=$(echo "$services" | sort | uniq)
 
 if [[ -n "$services" ]]; then
     echo "The following systemd services have stale file handles open to"
