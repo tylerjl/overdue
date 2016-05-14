@@ -3,13 +3,14 @@
 declare services=""
 while read -r f; do
     i="$(ps -o unit= $(echo "$(fuser $f 2> /dev/null)"))"
+    i="$(sort <(echo -e $i) | uniq)"
     for service in $i; do
         if [[ -n "$service" ]]; then
             services="${services}\n${service}"
         fi
     done
 done
-services=$(sort <(echo -e $services) | uniq)
+services="$(sort <(echo -e $services) | uniq)"
 
 if [[ -n "$services" ]]; then
     echo "The following systemd services have stale file handles open to"
