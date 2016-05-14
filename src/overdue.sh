@@ -2,12 +2,11 @@
 
 declare services=""
 while read -r f; do
-    for i in "$(fuser $f 2> /dev/null)"; do
-        for service in "$(ps -o unit= $i)"; do
-            if [[ -n "$service" ]]; then
-                services="${services}\n${service}"
-            fi
-        done
+    i="$(ps -o unit= $(echo "$(fuser $f 2> /dev/null)"))"
+    for service in $i; do
+        if [[ -n "$service" ]]; then
+            services="${services}\n${service}"
+        fi
     done
 done
 services=$(sort <(echo -e $services) | uniq)
