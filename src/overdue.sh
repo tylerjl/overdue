@@ -2,7 +2,7 @@
 
 files=""
 while read -r f; do
-    files="${files} ${f}"
+    files="${files} /${f}"
 done
 
 pids=$(echo $(fuser $files 2> /dev/null))
