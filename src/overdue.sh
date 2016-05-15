@@ -12,13 +12,20 @@ done
 pids=$(echo $(fuser $files 2> /dev/null))
 
 # get and sort the systemd unit names, removing duplicates
-services="$(ps -o unit= $pids)"
-services=$(echo "$services" | sort | uniq)
+# have to check if we actually got any PID's; otherwise ps returns
+# user1000.service, etc.
 
-if [[ -n "$services" ]]; then
-    echo "The following systemd services have stale file handles open to"
-    echo "libraries that have been upgraded:"
-    for i in $services; do
-        echo -e "  $i"
-    done
+if [[ -n "$pids" ]]; then
+
+    services="$(ps -o unit= $pids)"
+    services=$(echo "$services" | sort | uniq)
+
+    if [[ -n "$services" ]]; then
+        echo "The following systemd services have stale file handles open to"
+        echo "libraries that have been upgraded:"
+        for i in $services; do
+            echo -e "  $i"
+        done
+    fi
+
 fi
