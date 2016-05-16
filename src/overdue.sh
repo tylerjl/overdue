@@ -5,11 +5,10 @@ if [ "$EUID" != "0" ] ; then
     exit 1
 fi
 
-services="$(lsof -d DEL -F pn0 |\
-    awk -f /usr/share/overdue/overdue.awk |\
-    xargs -L1 systemctl status --no-pager 2>/dev/null |\
-    grep -E '[.]\w+ - ' |\
-    sort | uniq | sort)"
+pids=$(lsof -d DEL | awk 'NR>1 {printf $2" "}')
+if [[ -n "$pids" ]]; then
+    services="$(ps -o unit= $pids | sort -u)"
+fi
 
 if [ ! -z "$services" ] ; then
     echo "The following daemons/units have stale file handles open to
