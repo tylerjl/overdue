@@ -6,10 +6,9 @@ if [ "$EUID" != "0" ] ; then
 fi
 
 pids=$(lsof -d DEL | awk 'NR>1 {printf $2" "}')
-if [[ -n "$pids" ]]; then
-    services="$(ps -o unit= $pids | sort -u)"
-fi
+[[ -z "$pids" ]] && exit 0
 
+services="$(ps -o unit= $pids | sort -u)"
 if [ ! -z "$services" ] ; then
     echo "The following daemons/units have stale file handles open to
 libraries that have been upgraded. Consider restarting them
