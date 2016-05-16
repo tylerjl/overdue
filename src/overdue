@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ $EUID -ne 0 ]]; then
-    echo "ERROR: Script must be run as root." 
-    exit 1
-fi
-
-lsof -o / | awk '$4 == "DEL" {print $8}' | /usr/share/libalpm/scripts/overdue
