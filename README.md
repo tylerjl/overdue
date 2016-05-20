@@ -31,8 +31,7 @@ Net Upgrade Size:      0.03 MiB
  The following daemons/units have stale file handles open to
  libraries that have been upgraded. Consider restarting them
  if they should reference updated shared libraries.
-
- ● sshd.service - OpenSSH Daemon
+ ● sshd.service
 ```
 
 ## Why?
