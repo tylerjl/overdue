@@ -5,7 +5,7 @@ if [[ "$EUID" != "0" ]] ; then
     exit 1
 fi
 
-pids="$(lsof -d DEL | awk '$8~/\/usr\/lib/ {printf $2" "}')"
+pids="$(lsof -d DEL 2>/dev/null | awk '$8~/\/usr\/lib/ {printf $2" "}')"
 [[ -z "$pids" ]] && exit 0
 
 services="$(ps -o unit= $pids | sort -u)"
