@@ -2,7 +2,7 @@
 Operation = Upgrade
 Type = File
 Target = usr/lib/*
-Target = usr/lib64/*
+Target = usr/lib32/*
 
 [Action]
 Description = Checking for stale library file handles...
