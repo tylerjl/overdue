@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+echo <<EOF
+init.scope
+dbus.service
+zed.service
+getty@tty1.service
+user@1000.service
+dhcpcd.service
+user@1000.service
+user@1000.service
+dhcpcd@enp2s0.service
+polkit.service
+postgresql.service
+user@1000.service
+postgresql.service
+postgresql.service
+postgresql.service
+postgresql.service
+postgresql.service
+postgresql.service
+postgresql.service
+NetworkManager.service
+lvm2-lvmetad.service
+EOF

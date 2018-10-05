@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 if [[ "$EUID" != "0" ]] ; then
+  if [[ "$CI" != "true" ]] ; then
     echo 'You must be root to run this program.'
     exit 1
+  fi
 fi
 
 pids="$(lsof -d DEL 2>/dev/null | awk '$8~/\/usr\/lib/ {printf $2" "}')"
