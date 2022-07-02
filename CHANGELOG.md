@@ -1,3 +1,7 @@
+# 1.1.1
+
+* Add MIT license
+
 # 1.1.0
 
 * Implement checking via ps -o rather than calls to systemctl #1
