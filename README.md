@@ -1,7 +1,7 @@
 # overdue
 
-Overdue is a [pacman](https://wiki.archlinux.org/index.php/pacman) post-transaction hook that looks for running daemons that reference deleted shared library file handles and notifies you about them.
-It's a simple shell script that makes no changes to your system, and lists all relevant units for easy reference.
+Overdue is a [pacman](https://wiki.archlinux.org/index.php/pacman) post-transaction hook that looks for running daemons that reference deleted shared library file handles, notifies you about them and can be configured to restart them.
+It's a simple shell script that makes no changes to your system (by default), and lists all relevant units for easy reference.
 
 ## Example
 
@@ -44,3 +44,13 @@ For example, if you were to update the `openssl` package to fix a vulnerability 
 
 Installing this package via the [AUR](https://aur.archlinux.org/) is sufficient.
 The informational hook will run whenever files in `/usr/lib` or `/usr/lib64` are updated.
+
+## overdue.conf
+
+This file is an optional config file that holds services that `overdue` should
+restart if they rely on shared libraries that were updated.
+
+```sh
+# one service per line that will be restarted by overdue when needed
+sshd.service
+```
